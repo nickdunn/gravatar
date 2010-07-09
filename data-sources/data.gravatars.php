@@ -31,12 +31,20 @@
 			
 			$result = new XMLElement($this->dsParamROOTELEMENT);			
 
-			foreach($this->_env["env"]["pool"][$this->ds_comments] as $email) {
-				$gravatar = new XMLElement("gravatar");
-				$gravatar->setAttribute("email", $email);
-				$gravatar->setAttribute("url", "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?s=" . $size . $this->size . "&amp;d=" . $this->_env["param"]["root"] . "/extensions/gravatar/assets/default.gif");
-				$result->appendChild($gravatar);
-			}
+			$email_list = array();
+			
+			if (!is_array($this->_env["env"]["pool"][$this->ds_comments])) return $result;
+			
+		    foreach($this->_env["env"]["pool"][$this->ds_comments] as $email) {
+		        $email = strtolower($email);
+		        if(!in_array($email, $email_list)) {
+		            $email_list[] = $email;
+		            $gravatar = new XMLElement("gravatar");
+		            $gravatar->setAttribute("email", $email);
+		            $gravatar->setAttribute("url", "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?s=" . $size . $this->size . "&amp;d=" . $this->_env["param"]["root"] . "/extensions/gravatar/assets/default.gif");
+		            $result->appendChild($gravatar);
+		        }
+		    }
 			
 			return $result;
 		}

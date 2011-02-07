@@ -4,21 +4,11 @@
 	
 		public function about(){
 			return array('name' => 'Data Source: Gravatar',
-						 'version' => '1.1',
-						 'release-date' => '2008-10-21',
+						 'version' => '1.2',
+						 'release-date' => '2011-02-07',
 						 'author' => array('name' => 'Nick Dunn',
-										   'website' => 'http://airlock.com',
-										   'email' => 'nick.dunn@airlock.com')
+										   'website' => 'http://airlock.com')
 				 		);
-		}
-		
-		public function uninstall(){
-
-		}
-
-
-		public function install(){
-			
 		}
 			
 	}

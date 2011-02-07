@@ -21,10 +21,9 @@
 					 'name' => 'Gravatars',
 					 'author' => array(
 							'name' => 'Nick Dunn',
-							'website' => 'http://airlock.com',
-							'email' => 'nick.dunn@airlock.com'),
-					 'version' => '1.0',
-					 'release-date' => '2008-10-21T15:58:52+00:00');	
+							'website' => 'http://airlock.com'),
+					 'version' => '1.2',
+					 'release-date' => '2011-02-07');	
 		}
 		
 		function grab(&$param_pool){

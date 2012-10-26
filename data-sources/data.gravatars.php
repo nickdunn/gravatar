@@ -4,14 +4,15 @@
 	
 	Class datasourcegravatars extends Datasource{
 		
-		/* Configuration */
-		// the comments data source output parameter, providing an array of email addresses
-		var $ds_comments = 'ds-comments';
-		// size in pixels
-		var $size = 40;
+		var $ds_comments;
+		var $ds_fieldhandle;
+		var $size;
 		
 		var $dsParamROOTELEMENT = 'gravatars';	
 		function __construct(&$parent, $env=NULL, $process_params=true){
+			$this->ds_comments = Symphony::Configuration()->get('comments-section', 'gravatars');
+			$this->ds_fieldhandle = Symphony::Configuration()->get('field-handle', 'gravatars');
+			$this->size = Symphony::Configuration()->get('size', 'gravatars');
 			parent::__construct($parent, $env, $process_params);
 			$this->_dependencies = array('$' . $this->ds_comments);
 		}
@@ -22,19 +23,21 @@
 					 'author' => array(
 							'name' => 'Nick Dunn',
 							'website' => 'http://airlock.com'),
-					 'version' => '1.2',
-					 'release-date' => '2011-02-07');	
+					 'version' => '1.3',
+					 'release-date' => '2012-10-26');
 		}
 		
-		function grab(&$param_pool){
+		function execute(&$param_pool){
 			
 			$result = new XMLElement($this->dsParamROOTELEMENT);			
 
 			$email_list = array();
+
+			$env = Frontend::instance()->Page()->Env();
+
+			if (!is_array($env['pool'][$this->ds_comments.'.'.$this->ds_fieldhandle])) return $result;
 			
-			if (!is_array($this->_env["env"]["pool"][$this->ds_comments])) return $result;
-			
-		    foreach($this->_env["env"]["pool"][$this->ds_comments] as $email) {
+		    foreach($env['pool'][$this->ds_comments.'.'.$this->ds_fieldhandle] as $email) {
 		        $email = strtolower($email);
 		        if(!in_array($email, $email_list)) {
 		            $email_list[] = $email;
